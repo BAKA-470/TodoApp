@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Caveat&display=swap');
+    </style>
+    <title>Todo app</title>
+</head>
+
+<body>
+    <!-- Main container -->
+    <div class="container">
+        <h1>Todo App</h1>
+        <!-- form to get data -->
+        <form action="/" method="post">
+            <input type="text" placeholder="Add something you want to do" name="todoValue" required>
+            <!-- button to submit the data -->
+            <button type="submit"><i class="fa-solid fa-plus"></i></button>
+        </form>
+        <!-- if condition to iterate and delete the data -->
+        <% if(data) { %>
+            <% data.forEach(todoValue=>{ %>
+                <!-- major container -->
+                <div class="do-con">
+                    <!-- the value or the task to be done -->
+                    <div class="do-val">
+                        <%= todoValue.todo %>
+                    </div>
+                    <!-- div for the delete button  -->
+                    <div class="but">
+                        <a class="todo-delete <%= todoValue.id %>">
+                            <button><i class="fa-solid fa-delete-left"></i></button>
+                        </a>
+                    </div>
+                </div>
+                <% }) %>
+                    <% } %>
+    </div>
+    <script>
+        // deleting the task that has been done
+        const deleteButton = document.querySelectorAll('.todo-delete')
+
+        deleteButton.forEach((button, i) => {
+            button.addEventListener("click", () => {
+                const endPoint = `/${button.classList[1]}`;
+                fetch(endPoint, {
+                    method: 'DELETE'
+                });
+                location.reload(); // reload the page after deleting a task from list   
+            });
+        });
+    </script>
+    <!-- Font awesome CDN -->
+    <script src="https://kit.fontawesome.com/f56cacc506.js" crossorigin="anonymous"></script>
+</body>
+
+</html>
